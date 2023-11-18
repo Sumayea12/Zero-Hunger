@@ -1,0 +1,52 @@
+﻿
+@{
+    
+    Layout = "~/Views/Shared/_RestaurantRegistrationLayout.cshtml";
+}
+
+<h2>My Donation</h2>
+
+@model IEnumerable<ZeroHunger.DTOs.CollectionRequestDTO>
+
+
+
+@if (Model == null || !Model.Any())
+{
+    <p>@ViewBag.Message</p>
+}
+else
+{
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Donation ID</th>
+                <th>RestaurantId</th>
+                <th>FoodName</th>
+                <th>Quantity</th>
+                <th>Date</th>
+                <th>MaxPreservationTime</th>
+                <th>Status</th>
+                <th>Employee Id</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var donation in Model)
+            {
+                <tr>
+                    <td>@donation.Id</td>
+                    <td>
+                        <a href="@Url.Action("RestaurantDetails", "YourControllerName", new { id = donation.RestaurantId })">
+                            @donation.RestaurantId
+                        </a>
+                    </td>
+                    <td>@donation.FoodName</td>
+                    <td>@donation.Quantity</td>
+                    <td>@donation.Date.ToShortDateString()</td>
+                    <td>@donation.MaxPreservationTime.ToString(@"hh\:mm")</td>
+                    <td>@donation.Status</td>
+                    <td>@donation.employeeId</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

@@ -1,0 +1,67 @@
+﻿@model ZeroHunger.DTOs.CompositeDTO2
+
+@{
+    ViewBag.Title = "SubmitCollectedFood";
+    Layout = "~/Views/Shared/_RestaurantRegistrationLayout.cshtml";
+}
+
+<h2>SubmitCollectedFood</h2>
+@if (!string.IsNullOrEmpty(ViewBag.Message))
+{
+    <p>@ViewBag.Message</p>
+}
+else
+{
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+    using (Html.BeginForm("CollectionRequests", "Home", FormMethod.Post))
+    {
+<table class="table table-bordered">
+    <tr>
+        <th>Request Id</th>
+
+        <th>Store Time (Collected)</th>
+        <th>Expire Time (Collected)</th>
+        <th>Action</th>
+    </tr>
+    @for (int i = 0; i < Model.CollectionRequests.Count(); i++)
+    {
+        var donation = Model.CollectionRequests.ElementAt(i);
+        <tr>
+            <td>
+                @Html.HiddenFor(model => model.CollectionRequests[i].RestaurantId)
+                Request Id: @Model.CollectionRequests[i].Id
+                <input type="hidden" name="CollectionRequests[@i].Id" value="@donation.RestaurantId" />
+            </td>
+
+
+            <td>
+                @Html.TextBoxFor(model => model.CollectedItems[i].StoreTime, new { @type = "time" })
+            </td>
+            <td>
+                @Html.TextBoxFor(model => model.CollectedItems[i].ExpireTime, new { @type = "time" })
+            </td>
+
+            <td>
+                <button type="submit" class="submitBtn" name="selectedRowIndex" value="@donation.Id">Submit</button>
+            </td>
+        </tr>
+    }
+
+</table>
+    }
+}

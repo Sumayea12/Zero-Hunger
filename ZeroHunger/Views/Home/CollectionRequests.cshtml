@@ -1,0 +1,51 @@
+﻿@model ZeroHunger.DTOs.CompositeDTO1
+
+@{
+    ViewBag.Title = "CollectionRequests";
+    Layout = "~/Views/Shared/_RestaurantRegistrationLayout.cshtml";
+}
+
+<h2>CollectionRequests</h2>
+@if (ViewBag.Message != null)
+{
+    <p>@ViewBag.Message</p>
+}
+@using (Html.BeginForm("CollectionRequests", "Home", FormMethod.Post))
+{
+    <table class="table table-bordered">
+        <tr>
+            <th>Donation ID</th>
+            <th>RestaurantId</th>
+            <th>FoodName</th>
+            <th>Quantity</th>
+            <th>Date</th>
+            <th>MaxPreservationTime</th>
+            <th>Status</th>
+            <th>Employee Id</th>
+            <th>Action</th>
+        </tr>
+        @for (int i = 0; i < Model.CollectionRequests.Count(); i++)
+        {
+            var donation = Model.CollectionRequests.ElementAt(i);
+            <tr>
+                <td>@donation.Id</td>
+                <td>
+                    <a href="@Url.Action("RestaurantDetails", "Home", new { id = donation.RestaurantId })">
+                        @donation.RestaurantId
+                    </a>
+                </td>
+                <td>@donation.FoodName</td>
+                <td>@donation.Quantity</td>
+                <td>@donation.Date.ToShortDateString()</td>
+                <td>@donation.MaxPreservationTime.ToString(@"hh\:mm")</td>
+                <td>@donation.Status</td>
+                <td>
+                    @Html.DropDownListFor(model => model.CollectionRequests[i].employeeId, new SelectList(Model.Users, "Id", "Id", Model.CollectionRequests[i].employeeId), "Select Employee")
+                    <button type="submit" class="submitBtn" name="selectedRowIndex" value="@donation.Id">Submit</button>
+                </td>
+            </tr>
+            <input type="hidden" name="CollectionRequests[@i].Id" value="@donation.Id" />
+        }
+    </table>
+ 
+}

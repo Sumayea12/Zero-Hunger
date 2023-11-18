@@ -1,0 +1,211 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ZeroHungerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="CollectedItems">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ReqId" Type="int" Nullable="false" />
+    <Property Name="FoodName" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="Quantity" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="EmployeeId" Type="int" Nullable="false" />
+    <Property Name="StoreTime" Type="time" Precision="7" Nullable="false" />
+    <Property Name="ExpireTime" Type="time" Precision="7" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CollectionRequests">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RestaurantId" Type="int" Nullable="false" />
+    <Property Name="FoodName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Quantity" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Status" Type="varchar" MaxLength="50" />
+    <Property Name="Date" Type="date" Nullable="false" />
+    <Property Name="MaxPreservationTime" Type="time" Precision="7" Nullable="false" />
+    <Property Name="CollectTime" Type="time" Precision="7" />
+    <Property Name="employeeId" Type="int" />
+    <Property Name="userid" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Distributions">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CollectionId" Type="int" Nullable="false" />
+    <Property Name="DistributedLocation" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Date" Type="date" Nullable="false" />
+    <Property Name="DistributedTime" Type="time" Precision="7" Nullable="false" />
+    <Property Name="FoodName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Quantity" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="EmployeeId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RegisteredRestaurants">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="userId" Type="int" Nullable="false" />
+    <Property Name="RestaurantName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Location" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ContactNumber" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Address" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ContactNumber" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Type" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_CollectedItems_CollectionRequests">
+    <End Role="CollectionRequests" Type="Self.CollectionRequests" Multiplicity="1" />
+    <End Role="CollectedItems" Type="Self.CollectedItems" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CollectionRequests">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CollectedItems">
+        <PropertyRef Name="ReqId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CollectedItems_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="CollectedItems" Type="Self.CollectedItems" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CollectedItems">
+        <PropertyRef Name="EmployeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CollectionRequests_RegisteredRestaurants">
+    <End Role="RegisteredRestaurants" Type="Self.RegisteredRestaurants" Multiplicity="1" />
+    <End Role="CollectionRequests" Type="Self.CollectionRequests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RegisteredRestaurants">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CollectionRequests">
+        <PropertyRef Name="RestaurantId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CollectionRequests_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="CollectionRequests" Type="Self.CollectionRequests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CollectionRequests">
+        <PropertyRef Name="employeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CollectionRequests_Users1">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="CollectionRequests" Type="Self.CollectionRequests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CollectionRequests">
+        <PropertyRef Name="userid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Distributions_CollectedItems">
+    <End Role="CollectedItems" Type="Self.CollectedItems" Multiplicity="1" />
+    <End Role="Distributions" Type="Self.Distributions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CollectedItems">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Distributions">
+        <PropertyRef Name="CollectionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Distributions_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Distributions" Type="Self.Distributions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Distributions">
+        <PropertyRef Name="EmployeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RegisteredRestaurants_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="RegisteredRestaurants" Type="Self.RegisteredRestaurants" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RegisteredRestaurants">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ZeroHungerModelStoreContainer">
+    <EntitySet Name="CollectedItems" EntityType="Self.CollectedItems" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CollectionRequests" EntityType="Self.CollectionRequests" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Distributions" EntityType="Self.Distributions" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RegisteredRestaurants" EntityType="Self.RegisteredRestaurants" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_CollectedItems_CollectionRequests" Association="Self.FK_CollectedItems_CollectionRequests">
+      <End Role="CollectionRequests" EntitySet="CollectionRequests" />
+      <End Role="CollectedItems" EntitySet="CollectedItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CollectedItems_Users" Association="Self.FK_CollectedItems_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="CollectedItems" EntitySet="CollectedItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CollectionRequests_RegisteredRestaurants" Association="Self.FK_CollectionRequests_RegisteredRestaurants">
+      <End Role="RegisteredRestaurants" EntitySet="RegisteredRestaurants" />
+      <End Role="CollectionRequests" EntitySet="CollectionRequests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CollectionRequests_Users" Association="Self.FK_CollectionRequests_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="CollectionRequests" EntitySet="CollectionRequests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CollectionRequests_Users1" Association="Self.FK_CollectionRequests_Users1">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="CollectionRequests" EntitySet="CollectionRequests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Distributions_CollectedItems" Association="Self.FK_Distributions_CollectedItems">
+      <End Role="CollectedItems" EntitySet="CollectedItems" />
+      <End Role="Distributions" EntitySet="Distributions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Distributions_Users" Association="Self.FK_Distributions_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Distributions" EntitySet="Distributions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RegisteredRestaurants_Users" Association="Self.FK_RegisteredRestaurants_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="RegisteredRestaurants" EntitySet="RegisteredRestaurants" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

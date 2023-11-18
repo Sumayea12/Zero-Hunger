@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewBag.Title = "CollectedItems";
+    Layout = "~/Views/Shared/_RestaurantRegistrationLayout.cshtml";
+}
+@model List<ZeroHunger.DTOs.CollectedItemDTO>
+<h2>CollectedItems</h2>
+
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+</style>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Req Id</th>
+            <th>Food Name</th>
+            <th>Quantity</th>
+            <th>Employee Id</th>
+            <th>Store Time</th>
+            <th>Expire Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var collecteditems in Model)
+        {
+            <tr>
+                <td>@collecteditems.Id</td>
+                <td>@collecteditems.ReqId</td>
+                <td>@collecteditems.FoodName</td>
+                <td>@collecteditems.Quantity</td>
+                <td>@collecteditems.EmployeeId</td>
+                <td>@collecteditems.StoreTime</td>
+                <td>@collecteditems.ExpireTime</td>
+            </tr>
+        }
+    </tbody>
+</table>

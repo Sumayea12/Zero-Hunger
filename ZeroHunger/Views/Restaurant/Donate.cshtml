@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "MyRestaurants";
+    Layout = "~/Views/Shared/_InnerDonation.cshtml";
+}
+<h2>Donate</h2>
+@{
+    int RestaurantId = ViewBag.RestaurantId;
+}
+<form method="post" action="/Restaurant/Donate">
+    <input type="hidden" name="RestaurantId" value="@RestaurantId" /> <!-- Add a hidden field for RestaurantId -->
+    Food Name:
+    <input type="text" name="FoodName" class="form-control" placeholder="FOOD Name" />
+    <br />
+    Quantity:
+    <input type="text" name="Quantity" class="form-control" placeholder="Quantity" />
+    <br>
+    Date:
+    <input type="date" name="Date" class="form-control" placeholder="Date" value="@DateTime.Now.ToString("yyyy-MM-dd")" readonly />
+    <br>
+    Max Preservation Time:
+    <input type="time" name="MaxPreservationTime" class="form-control" placeholder="Max Preservation Time" />
+    <br>
+    <input type="submit" value="Donate" class="btn btn-warning" />
+</form>

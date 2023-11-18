@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+</head>
+<body>
+    <div>
+        <a class="btn btn-danger" href="/Employee/CollectionRequests">Collection Requests</a>
+        <a class="btn btn-danger" href="/Employee/DistributionRequests">Registered Restaurants</a>
+        <a class="btn btn-success" href="/Employee/SubmitCollectedFood">Collected Items</a>
+        <a class="btn btn-warning" href="/Home/logout">Logout</a>
+    </div>
+    <div>
+        @RenderBody()
+    </div>
+    <div>
+        Copyright @@
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+
+

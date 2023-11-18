@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+</head>
+<body>
+    <div>
+        <a class="btn btn-danger" href="/Home/CollectionRequests">Collection Requests</a>
+        <a class="btn btn-danger" href="/Home/Registered_Restaurants">Registered Restaurants</a>
+        <a class="btn btn-success" href="/Home/CollectedItems">Collected Items</a>
+        <a class="btn btn-success" href="/Home/Distribution">Distribution</a>
+        <a class="btn btn-success" href="/Home/Distributed_Foods">Distributed Foods</a>
+        <a class="btn btn-warning" href="/Home/logout">Logout</a>
+    </div>
+    <div>
+        @RenderBody()
+    </div>
+    <div>
+        Copyright @@
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+
+
